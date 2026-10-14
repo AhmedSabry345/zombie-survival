@@ -38,43 +38,46 @@ Menus are navigated by placing your right index fingertip on a button and pinchi
 
 ## Requirements
 
-- Python 3.10 or 3.11 (MediaPipe does not support 3.12+ on all platforms yet)
+- Windows 10 or 11
+- Python 3.10 or 3.11 (MediaPipe does not support 3.12+ yet)
 - A webcam
-- Windows, macOS, or Linux
+- Git (optional, for cloning)
+
+## Windows preparation
+
+1. **Install Python 3.11** from https://www.python.org/downloads/release/python-3119/ (or any 3.10 or 3.11 release).
+   During installation, check **"Add python.exe to PATH"**.
+2. **Verify the install.** Open Command Prompt or PowerShell and run:
+   ```bat
+   py -3.11 --version
+   ```
+   You should see `Python 3.11.x`.
+3. **Install Git** (optional) from https://git-scm.com/download/win if you want to clone the repository.
+4. **Allow camera access.** Go to **Settings → Privacy & security → Camera** and turn on camera access for desktop apps.
 
 ## Installation
 
-### Option 1: One command
+Run these commands in Command Prompt or PowerShell:
 
-**macOS / Linux:**
-```bash
-git clone https://github.com/YOUR_USERNAME/zombie-survival.git
-cd zombie-survival
-bash setup.sh
-```
-
-**Windows (Command Prompt or PowerShell):**
 ```bat
-git clone https://github.com/YOUR_USERNAME/zombie-survival.git
+git clone https://github.com/AhmedSabry345/zombie-survival.git
 cd zombie-survival
-setup.bat
+py -3.11 -m venv .venv
+.venv\Scripts\activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+python main.py
 ```
 
-The setup script creates a virtual environment, installs the dependencies, and launches the game.
+If you don't have Git, download the project as a ZIP from GitHub, extract it, open a terminal in that folder, and start from the `py -3.11 -m venv .venv` line.
 
-### Option 2: Manual install
+## Running the game later
 
-```bash
-git clone https://github.com/YOUR_USERNAME/zombie-survival.git
+After the first install, you only need:
+
+```bat
 cd zombie-survival
-python -m venv .venv
-
-# macOS / Linux
-source .venv/bin/activate
-# Windows
 .venv\Scripts\activate
-
-pip install -r requirements.txt
 python main.py
 ```
 
@@ -93,14 +96,15 @@ python main.py
 
 ## Optional: Shot sound
 
-The game looks for `cartoon_zombie_game_single_bullet.mp3` in the project folder and plays it when you fire. If the file is missing, the game runs silently. Add your own MP3 with that name to enable sound.
+The game looks for `cartoon_zombie_game_single_bullet.mp3` in the project folder and plays it when you fire. If the file is missing, the game runs silently.
 
 ## Troubleshooting
 
-- **Camera doesn't open:** Make sure no other app is using the webcam. The game opens camera index `0`; if you have multiple cameras, change `cv.VideoCapture(0)` in `main.py`.
+- **`py -3.11` not found:** Reinstall Python and make sure "Add python.exe to PATH" is checked, or use the full path to the Python executable.
+- **Camera doesn't open:** Close other apps using the webcam (Zoom, Teams, browser tabs). The game uses camera index `0`; if you have several cameras, change `cv.VideoCapture(0)` in `main.py`.
 - **Hands not detected:** Use good lighting and keep your hands in front of the camera.
-- **`pip install` fails on MediaPipe:** Confirm you're on Python 3.10 or 3.11.
-- **Fullscreen covers the wrong display:** Start the game on the monitor you want, or switch between windowed and fullscreen by using `q` to quit and relaunch.
+- **`pip install` fails on MediaPipe:** Confirm the venv was created with Python 3.10 or 3.11 (`python --version` inside the activated venv).
+- **Activation blocked in PowerShell:** Run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once, then try activating again.
 
 ## License
 
